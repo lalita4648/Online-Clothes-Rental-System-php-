@@ -1,0 +1,124 @@
+<?php
+error_reporting(E_ALL ^ E_NOTICE);
+
+$mysql_hostname = "localhost";
+$mysql_user = "root";
+$mysql_password = "";
+$mysql_database = "bstailor";
+$bd = mysql_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Opps some thing went wrong");
+mysql_select_db($mysql_database, $bd) or die("Opps some thing went wrong");
+
+$id=$_REQUEST['id'];
+$fid=$_REQUEST['fid'];
+$bid=$_REQUEST['bid'];
+
+if($id!='')
+{
+$id=$_REQUEST['id'];
+$query="SELECT * FROM sb_contact WHERE `id`='".$id."'";
+$query1=mysql_query($query);  $results=mysql_fetch_array($query1);
+$name=$results['name']; $email=$results['email'];  $phone=$results['phone'];  $suggestion=$results['suggestion'];
+$city=$results['city']; $country=$results['country'];
+}
+if($fid!='')
+{
+$fid=$_REQUEST['fid'];
+$fquery="SELECT * FROM sb_feedback WHERE `id`='".$fid."'";
+$fquery1=mysql_query($fquery);  $fresults=mysql_fetch_array($fquery1);
+
+$id=$fresults['id']; $name=$fresults['name'];  $email=$fresults['email'];  $phone=$fresults['phone'];
+$address=$fresults['address'];
+}
+if($bid!='')
+{
+$bid=$_REQUEST['bid'];
+ $bquery="SELECT * FROM sb_blog WHERE `id`='".$bid."'"; $bquery1=mysql_query($bquery); 
+
+$bresults=mysql_fetch_array($bquery1);
+$id=$bresults['id']; $name=$bresults['name'];  $email=$bresults['email'];  $suggestion=$bresults['suggestion'];
+}
+
+?>
+<html>
+<head>
+<title>Edit Form</title>
+<link href="css/techno.css" type="text/css" rel="stylesheet"></head>
+<body bgcolor="#e4e4e4">
+<div class="main">
+<span style="padding-left:420px;"><b><u> Update Record Form</u></b></span><br/> <br/>
+<form name="form1" method="POST" action="#">
+
+<?php if($_GET['id']!=""){?>
+<table border="1" cellspacing="2" cellpadding="2" width="450" align="center">
+<tr><td colspan="2" align="center"><strong>Member Details :</strong></td></tr>
+
+<tr align="left" valign="top"><td>Name</td><td> <input type="text" name="name" value="<?php echo $name; ?>"></td></tr>
+<tr align="left" valign="top"><td>Email Id</td><td> <input type="text" name="email" value="<?php echo $email; ?>"></td></tr>
+<tr align="left" valign="top"><td>Phone No.</td><td> <input type="text" name="phone" value="<?php echo $phone; ?>"></td></tr>
+<tr align="left" valign="top"><td>Suggestion</td><td> <input type="text" name="suggestion" value="<?php echo $suggestion; ?>"></td></tr>
+<tr align="left" valign="top"><td>City</td><td> <input type="text" name="city" value="<?php echo $city; ?>"></td></tr>
+<tr align="left" valign="top"><td>Country</td><td> <input type="text" name="country" value="<?php echo $country; ?>"></td></tr>
+<tr align="left" valign="top"><td></td><td><input type="submit" name="submit" value="Update"></td></tr>
+</table>
+<?php }?>
+<?php if($_GET['fid']!=""){?>
+<table border="1" cellspacing="2" cellpadding="2" width="450" align="center">
+<tr><td colspan="2" align="center"><strong>Feedback Details :</strong></td></tr>
+
+<tr align="left" valign="top"><td>Name</td><td> <input type="text" name="name" value="<?php echo $name; ?>"></td></tr>
+<tr align="left" valign="top"><td>Email Id</td><td> <input type="text" name="email" value="<?php echo $email; ?>"></td></tr>
+<tr align="left" valign="top"><td>Phone No.</td><td> <input type="text" name="phone" value="<?php echo $phone; ?>"></td></tr>
+<tr align="left" valign="top"><td>Address</td><td> <input type="text" name="address" value="<?php echo $address; ?>"></td></tr>
+
+
+<tr align="left" valign="top"><td></td><td><input type="submit" name="submitf" value="Update"></td></tr>
+</table>
+<?php }?>
+
+<?php if($_GET['bid']!=""){?>
+<table border="1" cellspacing="2" cellpadding="2" width="450" align="center">
+<tr><td colspan="2" align="center"><strong>Blog Details :</strong></td></tr>
+
+<tr align="left" valign="top"><td>Name</td><td> <input type="text" name="name" value="<?php echo $name; ?>"></td></tr>
+<tr align="left" valign="top"><td>Email Id</td><td> <input type="text" name="email" value="<?php echo $email; ?>"></td></tr>
+<tr align="left" valign="top"><td>Suggestion</td><td> <input type="text" name="suggestion" value="<?php echo $suggestion; ?>"></td></tr>
+<tr align="left" valign="top"><td></td><td><input type="submit" name="submitb" value="Update"></td></tr>
+</table>
+
+<?php }?>
+</form>
+</div>
+</body>
+</html>
+
+<?php
+if($_GET['id']!="" || $_GET['fid']!="" || $_GET['bid']!=""){
+        if(isset($_POST['submit']))
+            {
+            $update="UPDATE `sb_contact` SET `name`='".$_POST['name']."', `email`='".$_POST['email']."', `phone`='".$_POST['phone']."',
+                `suggestion`='".$_POST['suggestion']."' , `city`='".$_POST['city']."' , `country`='".$_POST['country']."' WHERE `id`='".$id."'";
+                $query2=mysql_query($update) or die(mysql_error());   
+                header("location:login_success_new.php");
+
+            }
+        else if(isset($_POST['submitf']))
+        {
+               $update="UPDATE `sb_feedback` SET `name`='".$_POST['name']."', `email`='".$_POST['email']."', `phone`='".$_POST['phone']."',
+                `address`='".$_POST['address']."' WHERE `id`='".$fid."'";
+                $query2=mysql_query($update) or die(mysql_error());   
+                header("location:login_success_new.php");
+
+        }
+       
+        else if(isset($_POST['submitb']))
+        {
+            $update="UPDATE `sb_blog` SET `name`='".$_POST['name']."', `email`='".$_POST['email']."', `suggestion`='".$_POST['suggestion']."'  WHERE `id`='".$bid."'";
+                $query2=mysql_query($update) or die(mysql_error());   
+                header("location:login_success_new.php");
+        }
+       
+        //header("location:login_success_new.php");
+
+}
+?>
+ <link href="css/techno.css" type="text/css" rel="stylesheet">

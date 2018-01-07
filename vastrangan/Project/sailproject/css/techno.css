@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body{ font-family:Arial, Tahoma, "Trebuchet MS", Verdana, ;
+	color:#333333; font-weight:normal; 
+	text-decoration:none; 
+	font-size:12px; 
+	height:18px; 
+	padding-left:5px; }
+.main{margin:50px 0px 0px 420px; width:460px; height:auto;border:0px solid #333;}
+.main1{margin:50px 0px 0px 350px; width:660px; height:auto;border:0px solid #333;}
+
+ A {
+	color:#0059b1; font-weight:bold; text-decoration:none; font-size:14px;
+}
+ A:hover {
+	color:red; font-weight:bold; text-decoration:none;
+}
+

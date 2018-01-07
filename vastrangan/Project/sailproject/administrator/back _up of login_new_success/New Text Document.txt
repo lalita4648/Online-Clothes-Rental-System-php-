@@ -1,0 +1,121 @@
+<?php
+
+session_start();
+error_reporting(E_ALL ^ E_NOTICE);
+$mysql_hostname = "localhost";
+$mysql_user = "root";
+$mysql_password = "";
+$mysql_database = "bstailor";
+$bd = mysql_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Opps some thing went wrong");
+mysql_select_db($mysql_database, $bd) or die("Opps some thing went wrong");
+
+echo '<span  style="font-size:14px; color:#333; font-weight:bold;margin-left:650px;">User Name -: &nbsp;&nbsp;'. $_SESSION['first_name'].'</span>';
+ echo '<span  style="font-size:14px; color:#333; font-weight:bold;margin-left:150px;"><a href="logout.php">Logout</a></span>';
+ echo "<pre/>";
+ if (!isset($_SESSION['email']))
+{
+    header("Location: login.php?e=access_denied");
+    exit();
+}
+ $email =  $_SESSION['email'];
+ $email_admin ="admin@gmail.com";
+ 
+      $display="SELECT *FROM sb_contact";
+     $dis=mysql_query($display)or die(mysql_error());
+                ?>
+     <table width="50%" border="1" cellspacing="0" cellpadding="0" align="center" bgcolor="#fff">
+    <tr>
+      <td colspan="9"><strong><u>Member  Enquiry Details :</u></strong></td>
+    </tr>                   
+                   
+    <tr>
+      <td><strong>Sr. No.</strong></td> <td><strong>Name</strong></td>
+      <td><strong>Email</strong></td> <td><strong>Phone No.</strong></td>
+      <td><strong>Suggestion</strong></td> <td><strong>City</strong></td>
+      <td><strong>Country</strong></td>
+      <td><strong>Edit</strong></td>
+      <td><strong>Delete</strong></td>
+    </tr>
+                <?php        while($row = mysql_fetch_array($dis))
+                          { ?>
+                             <tr>
+      <td><?php echo $row['id'];?></td> <td><?php echo $row['name'];?></td>  <td><?php echo $row['email'];?></td>
+      <td> <?php echo $row['phone'];?></td> <td> <?php echo $row['suggestion'];?></td>
+      <td><?php echo $row['city'];?></td>
+      <td><?php echo $row['country'];?></td>
+      <td><a href="edit.php?id=<?php echo $row['id'];?>">Edit</a></td>
+       <td><a href="delete.php?id=<?php echo $row['id'];?>">Delete</a></td>
+     
+    </tr>
+    <?php }?>
+    </table>
+<?php   
+
+    
+$display1="SELECT *FROM sb_feedback";
+     $dis1=mysql_query($display1)or die(mysql_error());
+
+                ?>
+      <table width="50%" border="1" cellspacing="0" cellpadding="0" align="center" bgcolor="#fff">
+     <tr>
+       <td colspan="9"><strong><u>Member feedback Details :</u></strong></td>
+    </tr>                  
+                  
+     <tr>
+       <td><strong>Sr. No.</strong></td> <td><strong>Name</strong></td>
+      <td><strong>Email</strong></td> <td><strong>Phone No.</strong></td>
+       <td><strong>Suggestion</strong></td>
+     
+       <td><strong>Edit</strong></td>
+       <td><strong>Delete</strong></td>
+     </tr>
+                 <?php        while($row1 = mysql_fetch_array($dis1))
+                           { ?>
+                              <tr>
+       <td><?php echo $row1['id'];?></td> <td><?php echo $row1['name'];?></td>  <td><?php echo $row1['email'];?></td>
+       <td> <?php echo $row1['phone'];?></td> <td> <?php echo $row1['address'];?></td>
+    
+       <td><a href="edit.php?fid=<?php echo $row1['id'];?>">Edit</a></td>
+       <td><a href="delete.php?fid=<?php echo $row1['id'];?>">Delete</a></td>
+
+    
+    </tr>
+    <?php }?>
+    </table>    
+   
+<?php   
+    
+$display2="SELECT * FROM sb_blog";
+     $dis2=mysql_query($display2)or die(mysql_error());
+
+                ?>
+      <table width="50%" border="1" cellspacing="0" cellpadding="0" align="center" bgcolor="#fff">
+     <tr>
+       <td colspan="9"><strong><u>Member blog Details :</u></strong></td>
+    </tr>                  
+                  
+     <tr>
+       <td><strong>Sr. No.</strong></td> <td><strong>Name</strong></td>
+      <td><strong>Email</strong></td>
+       <td><strong>Comment</strong></td>
+     
+       <td><strong>Edit</strong></td>
+       <td><strong>Delete</strong></td>
+     </tr>
+                 <?php        while($row2 = mysql_fetch_array($dis2))
+                           { ?>
+                              <tr>
+       <td><?php echo $row2['id'];?></td> <td><?php echo $row2['name'];?></td>  <td><?php echo $row2['email'];?></td>
+      <td><?php echo $row2['suggestion'];?></td>
+    
+      <td><a href="edit.php?bid=<?php echo $row2['id'];?>">Edit</a></td>
+       <td><a href="delete.php?bid=<?php echo $row2['id'];?>">Delete</a></td>
+
+    
+    </tr>
+    <?php }?>
+    </table>      
+
+        
+      
+ <link href="css/techno.css" type="text/css" rel="stylesheet">
